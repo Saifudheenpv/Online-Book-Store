@@ -1,0 +1,12 @@
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse/IDE
+/.idea/
+/*.iml
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
