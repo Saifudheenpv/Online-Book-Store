@@ -6,8 +6,11 @@ FROM maven:3.9.3-eclipse-temurin-17 AS build
 # Set working directory
 WORKDIR /app
 
-# Copy pom.xml and source code
+# Copy pom.xml and download dependencies first (caching layer)
 COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code
 COPY src ./src
 
 # Build the jar (skip tests for faster builds)
@@ -24,9 +27,11 @@ WORKDIR /app
 # Copy jar from build stage
 COPY --from=build /app/target/online-book-store-1.0.0.jar ./app.jar
 
-# Expose Spring Boot port
-EXPOSE 8080
+# Expose the port
+EXPOSE 8081
 
-# Run the application on port 8081
+# Set Spring Boot server port
 ENV SERVER_PORT=8081
+
+# Run the Spring Boot application
 ENTRYPOINT ["java","-jar","app.jar"]
