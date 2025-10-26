@@ -110,19 +110,19 @@ http://<EC2-public-ip>:8081
 ### Home Page
 ![Home Page](assets/home.png)
 
-### Browse Books
+### Register User
 ![Register User](assets/register.png)
 
-### Checkout
+### Login User
 ![Login User](assets/login.png)
 
 ### Profile Page
 ![Profile](assets/user.png)
 
-### Order History
+### Browse Books
 ![Browse Books](assets/books.png)
 
-### Admin Dashboard
+### User Dashboard
 ![User Dashboard](assets/userdashboard.png)
 
 ---
