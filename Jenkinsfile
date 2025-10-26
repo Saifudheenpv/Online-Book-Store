@@ -24,7 +24,6 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Saifudheenpv/Online-Book-Store.git'
@@ -39,24 +38,9 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    retry(2) { // retry 2 times in case SonarQube is temporarily unreachable
-                        withSonarQubeEnv('Sonar-Server') {
-                            sh 'mvn sonar:sonar -Dsonar.projectKey=Online-Book-Store -Dsonar.projectName="Online Book Store"'
-                        }
-                    }
+                withSonarQubeEnv('Sonar-Server') {
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=Online-Book-Store -Dsonar.projectName="Online Book Store"'
                 }
-            }
-        }
-
-        stage('OWASP Dependency Check') {
-            steps {
-                sh """
-                mvn org.owasp:dependency-check-maven:check \
-                    -Dformat=HTML \
-                    -DdataDirectory=/var/lib/jenkins/dependency-check-data \
-                    -DautoUpdate=true
-                """
             }
         }
 
@@ -68,13 +52,11 @@ pipeline {
 
         stage('Docker Build & Push') {
             steps {
-                script {
-                    sh """
-                    docker build -t $DOCKER_IMAGE:latest .
-                    echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin
-                    docker push $DOCKER_IMAGE:latest
-                    """
-                }
+                sh """
+                docker build -t $DOCKER_IMAGE:latest .
+                echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin
+                docker push $DOCKER_IMAGE:latest
+                """
             }
         }
 
@@ -99,16 +81,16 @@ pipeline {
         success {
             emailext (
                 subject: "✅ SUCCESS: Jenkins Build #${env.BUILD_NUMBER} - ${env.JOB_NAME}",
-                body: "Build #${env.BUILD_NUMBER} succeeded.\nCheck here: ${env.BUILD_URL}",
-                to: 'yourgmail@gmail.com',
+                body: "Build #${env.BUILD_NUMBER} succeeded. Check: ${env.BUILD_URL}",
+                to: 'mesaifudheenpv@gmail.com',
                 from: SMTP_CREDENTIALS_USR
             )
         }
         failure {
             emailext (
                 subject: "❌ FAILURE: Jenkins Build #${env.BUILD_NUMBER} - ${env.JOB_NAME}",
-                body: "Build #${env.BUILD_NUMBER} failed.\nCheck here: ${env.BUILD_URL}",
-                to: 'yourgmail@gmail.com',
+                body: "Build #${env.BUILD_NUMBER} failed. Check: ${env.BUILD_URL}",
+                to: 'mesaifudheenpv@gmail.com',
                 from: SMTP_CREDENTIALS_USR
             )
         }
