@@ -43,6 +43,8 @@ It features a MySQL database, modern REST APIs, and a smooth deployment workflow
 
 The Jenkins pipeline automates the full lifecycle of the application:
 
+![CI/CD Pipeline Flow](assets/New.png)
+
 1. **Checkout** – Pulls the latest code from GitHub.
 2. **Maven Compile & Test** – Builds the project and runs unit tests.
 3. **SonarQube Analysis** – Performs static code analysis for quality metrics.
