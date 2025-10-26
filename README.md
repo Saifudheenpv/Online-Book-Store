@@ -105,6 +105,25 @@ docker run -d --name onlinebookstore -p 8081:8080 saifudheenpv/online-book-store
 ```
 http://<EC2-public-ip>:8081
 ```
+## Website Screenshots
+
+### Home Page
+![Home Page](assets/home.png)
+
+### Browse Books
+![Register User](assets/register.png)
+
+### Checkout
+![Login User](assets/login.png)
+
+### Profile Page
+![Profile](assets/user.png)
+
+### Order History
+![Browse Books](assets/books.png)
+
+### Admin Dashboard
+![User Dashboard](assets/userdashboard.png)
 
 ---
 
